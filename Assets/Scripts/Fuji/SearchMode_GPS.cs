@@ -1,44 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class SearchMode_GPS : MonoBehaviour
 {
-    public LocationInfo location;
-    public LocationServiceStatus status;
-    public float interval,x,y;
+    private TextMeshProUGUI tmPro;
+    private Vector2 location;
+    Utilities util;
     // Start is called before the first frame update
-    IEnumerator Start()
+    private void Start()
     {
-        this.status = Input.location.status;
-        if (Input.location.isEnabledByUser)
-        {
-            switch (this.status)
-            {
-                case LocationServiceStatus.Stopped:
-                    Input.location.Start();
-                    break;
-
-                case LocationServiceStatus.Running:
-                    this.location = Input.location.lastData;
-                    x = location.longitude;
-                    y = location.latitude;
-                    break;
-
-                default:
-                    break;
-            }
-        }
-        else
-        {
-            Debug.Log("location is disabled");
-        }
-        yield return new WaitForSeconds(interval);
+        tmPro = GameObject.Find("GPSText").GetComponent<TextMeshProUGUI>();
+        util = GetComponent<Utilities>();
     }
-
     // Update is called once per frame
-    void Update()
+    public void ShowLocationForButton()
     {
-        Debug.Log(this.status + "," + x.ToString() + ","+ y.ToString());
+        StartCoroutine(ShowLocation());
+    }
+    private IEnumerator ShowLocation()
+    {
+        yield return util.GPSCoroutine();
+        location = (Vector2)util.GPSCoroutine().Current;
+        tmPro.SetText(location.ToString());
     }
 }
