@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Chase.unity
+    guid: 54605139d78cdf64cbc85fb89e7768c4
   m_configObjects: {}
