@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Utilities : MonoBehaviour
 {
+    /// <summary>
+    /// 緯度と経度を返す
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator  GPSCoroutine()
     {
         int count = 0;
@@ -11,6 +15,7 @@ public class Utilities : MonoBehaviour
         {
             Debug.Log("GPS not enabled");
             yield return null;
+            count++;
             if (count > 1000) { yield break; }
         }
 
@@ -19,6 +24,7 @@ public class Utilities : MonoBehaviour
         while (Input.location.status != LocationServiceStatus.Running) //起動が完了するまで待つ
         {
             yield return null;
+            count++;
             if (count > 1000) { yield break; }
         }
 
@@ -36,6 +42,43 @@ public class Utilities : MonoBehaviour
         latitude = gps.y;
     }
     */
+
+
+    //北からの角度を返す
+    public IEnumerator DirectionCoroutine()
+    {
+        int count = 0;
+        while (!Input.location.isEnabledByUser)//コンパス機能が有効になるまで待つ
+        {
+            Debug.Log("GPS not enabled");
+            yield return null;
+            count++;
+            if (count > 1000) { yield break; }
+        }
+
+        Input.location.Start(); //コンパス起動開始
+
+        while (Input.location.status != LocationServiceStatus.Running) //起動が完了するまで待つ
+        {
+            yield return null;
+            count++;
+            if (count > 1000) { yield break; }
+        }
+
+        Input.compass.enabled = true; //コンパス有効化
+
+        yield return Input.compass.trueHeading;
+    }
+
+    /* 使用例
+     * 
+     public IEnumerator StartDirectionService()
+    {
+        var coroutine = new Utilities().DirectionCoroutine();
+        yield return StartCoroutine(coroutine);
+        print((float)coroutine.Current);
+    }
+     **/
 
 }
 

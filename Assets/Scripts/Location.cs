@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Location : MonoBehaviour
 {
@@ -12,9 +13,11 @@ public class Location : MonoBehaviour
 
     private void Start()
     {
+
         Instance = this;
         DontDestroyOnLoad(gameObject);
         StartCoroutine(StartLocationService());
+        StartCoroutine(StartDirectionService());
     }
 
 
@@ -28,8 +31,23 @@ public class Location : MonoBehaviour
     {
         var coroutine = new Utilities().GPSCoroutine();
         yield return StartCoroutine(coroutine);
-        Vector2 gps =(Vector2)coroutine.Current ;
+
+        Vector2 gps = (Vector2)coroutine.Current;
         longitude = gps.x;
         latitude = gps.y;
+        print(gps.x);
+    }
+
+
+    public IEnumerator StartDirectionService()
+    {
+        
+        while (true)
+        {
+            var coroutine = new Utilities().DirectionCoroutine();
+            yield return StartCoroutine(coroutine);
+            print((float)coroutine.Current);
+            yield return null;
+        }
     }
 }
