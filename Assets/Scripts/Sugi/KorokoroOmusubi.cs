@@ -180,7 +180,7 @@ public class KorokoroOmusubi : MonoBehaviour
 
         float scale = distance/dir.magnitude;
 
-        Omusubi.transform.localScale = Vector3.one * scale;
+        Omusubi.transform.localScale = Vector3.one * scale/10;
 
     }
 
@@ -221,7 +221,7 @@ public class KorokoroOmusubi : MonoBehaviour
             if (count > 1000) { yield break; }
         }
 
-        print(Input.location.lastData.longitude);
+        //print(Input.location.lastData.longitude);
         yield return new Vector2(Input.location.lastData.longitude, Input.location.lastData.latitude);
 
     }

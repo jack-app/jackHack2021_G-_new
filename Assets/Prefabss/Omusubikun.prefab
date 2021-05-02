@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2134855290615889975}
   - component: {fileID: 3542998928386410934}
+  - component: {fileID: 3279797003926736909}
   m_Layer: 0
   m_Name: Omusubikun
   m_TagString: Untagged
@@ -45,6 +46,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   voice: {fileID: 5823502784505744628, guid: 6020de214de0224449d11cdda90da060, type: 3}
+--- !u!114 &3279797003926736909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8054228115671562112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 202abde819d59d549a3a8d1f7994b06a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voice: {fileID: 5823502784505744628, guid: 83669abc4018aa747828ec8304e5840a, type: 3}
 --- !u!1001 &6644416201960728088
 PrefabInstance:
   m_ObjectHideFlags: 0
