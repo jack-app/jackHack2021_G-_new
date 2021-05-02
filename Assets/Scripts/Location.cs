@@ -50,8 +50,8 @@ public class Location : MonoBehaviour
             //float heading= (float)coroutine.Current;
             //japan.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, heading);
 
-            
 
+            print((float)coroutine.Current);
 
             yield return null;
         }

@@ -18,20 +18,33 @@ public class KorokoroOmusubi : MonoBehaviour
 
     IEnumerator StartCorocoro()
     {
-        var gpsCoroutine = new Utilities().GPSCoroutine();
+        var utilities = Utilities.Instance;
+
+        var gpsCoroutine = utilities.GPSCoroutine();
         yield return StartCoroutine(gpsCoroutine);
         Vector2 gps = (Vector2)gpsCoroutine.Current;
-        var gps2 =gps+ Utilities.MeterToGPS(new Vector2(1000,1000), gps.y);
+        var gps2 =gps+ Utilities.MeterToGPS(new Vector2(0,1000), gps.y);
 
 
         while (true)
         {
+            var ComparingConnpassCoroutine = utilities.ComparingConnpass(gps2);
 
 
-            yield return new WaitForSeconds(1);
+            yield return StartCoroutine(ComparingConnpassCoroutine);
+
+            print((float)ComparingConnpassCoroutine.Current);
         }
 
 
     }
+
+}
+
+
+public class Destination
+{
+    Vector2 startGPS;
+
 
 }
