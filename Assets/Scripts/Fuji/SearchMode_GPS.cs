@@ -12,8 +12,8 @@ public class SearchMode_GPS : MonoBehaviour
     private void Start()
     {
         //Start‚¾‚©‚çFind‹–‚µ‚Ä
-        tmLocation = GameObject.Find("LocationText").GetComponent<TextMeshProUGUI>();
-        tmAngle = GameObject.Find("AngleText").GetComponent<TextMeshProUGUI>();
+        //tmLocation = GameObject.Find("LocationText").GetComponent<TextMeshProUGUI>();
+        //tmAngle = GameObject.Find("AngleText").GetComponent<TextMeshProUGUI>();
     }
     // Update is called once per frame
     //ƒ{ƒ^ƒ“‚ÅŒÄ‚Ñ‚½‚¢‚Ì‚Åpublic void‚Ì”ç‚ð‚©‚Ô‚¹‚é

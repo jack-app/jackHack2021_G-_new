@@ -8,7 +8,9 @@ public class OmusubiAngleDetector : MonoBehaviour
     TextMeshProUGUI northText,southText,eastText,westText;
     public Vector2 currentLocation, nearestOmusubi;
     OmusubiGenerator OG;
-    public float angle,currentDistance;
+    public float angle,currentDistance,sizeAdjust;
+    public Transform omusubiKun;
+    Vector3 omusubiKunStartPos;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +19,11 @@ public class OmusubiAngleDetector : MonoBehaviour
         southText = GameObject.Find("South").GetComponent<TextMeshProUGUI>();
         eastText = GameObject.Find("East").GetComponent<TextMeshProUGUI>();
         westText = GameObject.Find("West").GetComponent<TextMeshProUGUI>();
+        omusubiKun = GameObject.Find("omusubi_").transform;
+        omusubiKunStartPos = omusubiKun.transform.position;
+
+        //自動更新1秒に一回
+        InvokeRepeating("CallDetectAngle", 0, 1);
     }
 
     // Update is called once per frame
@@ -24,9 +31,10 @@ public class OmusubiAngleDetector : MonoBehaviour
     {
         
     }
+
     public void CallDetectAngle()
     {
-        if (OG.started == true)
+        //if (OG.started == true)
         {
             StartCoroutine(DetectAngle());
         }
@@ -40,6 +48,7 @@ public class OmusubiAngleDetector : MonoBehaviour
     }
     void ShowAngle()
     {
+        //おむすびリストのうち、最も近いものを取り出す
         float minDist = Mathf.Infinity;
         foreach (Vector2 omusubiLocation in OG.omusubiLocationList)
         {
@@ -57,26 +66,12 @@ public class OmusubiAngleDetector : MonoBehaviour
         //緯度の差分
         float yDelta = currentLocation.y - nearestOmusubi.y;
         //0.005の散らばり
-        //137.1749 35.05275
-        if(xDelta >= 0)
-        {
-            westText.fontSize = Mathf.Min(10 * 0.005f/xDelta,150);
-            eastText.fontSize = 0;
-        }
-        else
-        {
-            eastText.fontSize = Mathf.Min(10 * -0.005f/xDelta,150);
-            westText.fontSize = 0;
-        }
-        if(yDelta >= 0)
-        {
-            northText.fontSize = Mathf.Min(10 * 0.005f / yDelta,150);
-            southText.fontSize = 0;
-        }
-        else
-        {
-            southText.fontSize = Mathf.Min(10 * -0.005f / yDelta,150);
-            northText.fontSize = 0;
-        }
+        Vector2 omusubiKunDirection = new Vector2(xDelta, yDelta).normalized;
+        omusubiKun.position = new Vector3(omusubiKunDirection.x, omusubiKunDirection.y, 0)*currentDistance/200;
+        //距離に応じておむすびくんの大きさが変わる。
+        //0.2-1.5の間で距離に応じて
+        omusubiKun.localScale = new Vector3(Mathf.Min(Mathf.Max(0.2f, 50/currentDistance),1.5f),
+                                            Mathf.Min(Mathf.Max(0.2f, 50 / currentDistance), 1.5f),
+                                            Mathf.Min(Mathf.Max(0.2f, 50 / currentDistance), 1.5f));
     }
 }
