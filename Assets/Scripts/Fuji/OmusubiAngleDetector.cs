@@ -8,7 +8,7 @@ public class OmusubiAngleDetector : MonoBehaviour
     TextMeshProUGUI northText,southText,eastText,westText;
     public Vector2 currentLocation, nearestOmusubi;
     OmusubiGenerator OG;
-    public float angle,distance;
+    public float angle,currentDistance;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,9 +43,11 @@ public class OmusubiAngleDetector : MonoBehaviour
         float minDist = Mathf.Infinity;
         foreach (Vector2 omusubiLocation in OG.omusubiLocationList)
         {
-            distance = Utilities.GetDistanceFromGPS(currentLocation, omusubiLocation);
+            float distance = Utilities.GetDistanceFromGPS(currentLocation, omusubiLocation);
+
             if (distance < minDist)
             {
+                currentDistance = distance;
                 nearestOmusubi = omusubiLocation;
                 minDist = distance;
             }

@@ -16,15 +16,15 @@ public class OmusubiCaller : MonoBehaviour
     // Update is called once per frame
     public void CallOmusubi()
     {
-        if(OAD.distance <= 30)
+        if(OAD.currentDistance <= 30)
         {
             Debug.Log("Found Omusubi!");
-            //ƒŠƒXƒg‚Ì‰½”Ô‚©“Á’è‚·‚é‚Ì“ï‚µ‚¢‚ñ‚ÅAÅ‚à‹ß‚¢‚¨‚Þ‚·‚Ñ‚ð–k‹É‚Ö
-            OAD.nearestOmusubi = new Vector2(0, 0);
+            OG.omusubiLocationList.RemoveAt(OG.omusubiLocationList.IndexOf(OAD.nearestOmusubi));
+            OAD.CallDetectAngle();
         }
         else
         {
-            Debug.Log("No Omusubi here...");
+            Debug.Log("No Omusubi around here...");
         }
     }
 }
