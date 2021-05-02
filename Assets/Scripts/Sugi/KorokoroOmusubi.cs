@@ -8,10 +8,12 @@ public class KorokoroOmusubi : MonoBehaviour
 
     public Text text;
     public GameObject camera;
+    public Image panel;
+    public Vector2 targetGPS;
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(StartCorocoro());
+        StartCoroutine(ReadyCoroCoro());
     }
 
     // Update is called once per frame
@@ -21,6 +23,74 @@ public class KorokoroOmusubi : MonoBehaviour
     }
 
     public int distance=100;
+
+
+
+    IEnumerator ReadyCoroCoro()
+    {
+        int count = 0;
+        int speed = 0;
+        while (count < 700)
+        {
+            Omusubi.transform.Rotate(0, 0, 6);
+
+            if (count > 500)
+            {
+                Vector3 pos = Omusubi.transform.position;
+                pos.y += speed*0.0001f;
+                speed += 1;
+                Omusubi.transform.position = pos;
+            }
+            count++;
+            yield return null;
+        }
+
+
+        count = 0;
+
+        while (count < 200)
+        {
+            panel.color = new Color(1, 1, 1, count * 0.005f);
+            count++;
+
+            Omusubi.transform.Rotate(0, 0, 6);
+            Vector3 pos = Omusubi.transform.position;
+            pos.y += speed * 0.0001f;
+            speed += 1;
+            Omusubi.transform.position = pos;
+            yield return null;
+        }
+        count = 0;
+
+        while (count < 40)
+        {
+            yield return null;
+            count++;
+        }
+
+        StartCoroutine(StartCorocoro());
+
+        count = 0;
+
+        while (count < 10)
+        {
+            yield return null;
+            count++;
+        }
+
+        count = 0;
+
+        while (count < 200)
+        {
+            panel.color = new Color(1, 1, 1, 1-count * 0.005f);
+            count++;
+            yield return null;
+        }
+    }
+
+
+
+
 
     IEnumerator StartCorocoro()
     {
@@ -34,7 +104,7 @@ public class KorokoroOmusubi : MonoBehaviour
 
         dir = dir.normalized * distance;
 
-        var targetGPS =gps+ Utilities.MeterToGPS(dir, gps.y);
+        targetGPS =gps+ Utilities.MeterToGPS(dir, gps.y);
 
 
         while (true)
@@ -82,6 +152,8 @@ public class KorokoroOmusubi : MonoBehaviour
         Vector2 omuPos = dir.normalized*10;
 
         Omusubi.transform.position = new Vector3(omuPos.x, 0, omuPos.y);
+
+        Omusubi.transform.rotation = Quaternion.LookRotation(Omusubi.transform.position - camera.transform.position);
 
         float scale = distance/dir.magnitude;
 
