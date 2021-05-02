@@ -2,25 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OmuVoice : MonoBehaviour
+public class Sun : MonoBehaviour
 {
 
-    public GameObject voice;
+    Vector3 size;
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("Voice", 10, 3);
+        size = transform.localScale;
     }
 
+    int a = 0;
     // Update is called once per frame
     void Update()
     {
-        
-    }
+        a++;
+        transform.localScale = size * (Mathf.Cos(a * 0.03f) * 0.05f + 1f);
 
-
-    void Voice()
-    {
-        Instantiate(voice, transform.position + Vector3.up, Quaternion.identity);
     }
 }

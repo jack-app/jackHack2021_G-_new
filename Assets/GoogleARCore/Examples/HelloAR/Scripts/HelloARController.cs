@@ -99,21 +99,17 @@ namespace GoogleARCore.Examples.HelloAR
 
 
 
-        int count = 0;
-        bool put=false;
+        GameObject gameObject;
+
         /// <summary>
         /// The Unity Update() method.
         /// </summary>
-        public void Update()
+        public void OnButton()
         {
             UpdateApplicationLifecycle();
 
 
 
-            count++;
-            if (count < 100) { return; }
-            if (put) { return; }
-            put = true;
 
             Vector2 screenCenter = new Vector2(Screen.width / 2, Screen.height / 2);
 
@@ -178,8 +174,10 @@ namespace GoogleARCore.Examples.HelloAR
                         prefab = GameObjectHorizontalPlanePrefab;
                     }
 
+                    if (gameObject != null) { Destroy(gameObject); }
+
                     // Instantiate prefab at the hit pose.
-                    var gameObject = Instantiate(prefab, hit.Pose.position, hit.Pose.rotation);
+                    gameObject = Instantiate(prefab, hit.Pose.position, hit.Pose.rotation);
 
                     // Compensate for the hitPose rotation facing away from the raycast (i.e.
                     // camera).

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class KorokoroOmusubi : MonoBehaviour
 {
@@ -109,11 +110,6 @@ public class KorokoroOmusubi : MonoBehaviour
 
         while (true)
         {
-
-
-         
-
-
             var ComparingConnpassCoroutine = ComparingConnpass(targetGPS);
 
 
@@ -136,9 +132,36 @@ public class KorokoroOmusubi : MonoBehaviour
             SetOmusubi(targetGPS,nowGps);
             RotateCamera();
             yield return null;
+
+
+            if(Utilities.GetDistanceFromGPS(nowGps, targetGPS) < 50)
+            {
+                StartCoroutine(FindOmusubi());
+                StopCoroutine(StartCorocoro());
+            }
         }
 
 
+    }
+
+
+    IEnumerator FindOmusubi()
+    {
+        int count = 0;
+        while(count<100)
+        {
+            panel.color = new Color(1, 1, 1, count * 0.01f);
+            yield return null;
+            count++;
+        }
+
+        while (count < 500)
+        {
+            yield return null;
+            count++;
+        }
+
+        SceneManager.LoadScene("HelloAR");
     }
 
 
