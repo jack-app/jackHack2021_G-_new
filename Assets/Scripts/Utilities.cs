@@ -4,6 +4,41 @@ using UnityEngine;
 
 public class Utilities : MonoBehaviour
 {
+    public const int meter_per_longitude_X_equator = 111316;
+    public const int meter_per_latitude_Y = 110942;
+
+    /// <summary>
+    /// ある緯度における単位経度あたりの距離をメートルでかえす
+    /// </summary>
+    /// <param name="latitudeY"></param>
+    /// <returns></returns>
+    public static int MeterPerLongitudeX(float latitudeY)
+    {
+        return (int)(meter_per_longitude_X_equator * Mathf.Cos(latitudeY * Mathf.PI / 180));
+    }
+
+    //ある緯度における方向(メートル単位)を緯度経度に直す
+    public static Vector2 MeterToLonLat(Vector2 vec, float latitudeY)
+    {
+        float lonX = vec.x / (MeterPerLongitudeX(latitudeY));
+        float latY = vec.y / meter_per_latitude_Y;
+
+        return new Vector2(lonX,latY);
+    }
+
+    //2つの緯度経度間の距離を出す
+    public static float GetDistanceFromGPS(Vector2 gps1,Vector2 gps2)
+    {
+        var dirLonLat = gps2 - gps1;
+        Vector2 dir = new Vector2();
+
+        dir.x = dirLonLat.x * MeterPerLongitudeX(gps1.y);
+        dir.y = dirLonLat.y * meter_per_latitude_Y;
+
+        return dir.magnitude;
+    }
+
+
     /// <summary>
     /// 緯度と経度を返す
     /// </summary>
@@ -28,6 +63,7 @@ public class Utilities : MonoBehaviour
             if (count > 1000) { yield break; }
         }
 
+        print(Input.location.lastData.longitude);
         yield return new Vector2(Input.location.lastData.longitude, Input.location.lastData.latitude);
 
     }
@@ -79,6 +115,9 @@ public class Utilities : MonoBehaviour
         print((float)coroutine.Current);
     }
      **/
+
+
+
 
 }
 
