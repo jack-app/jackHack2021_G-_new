@@ -1,68 +1,106 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Utilities : MonoBehaviour
+public class KorokoroOmusubi : MonoBehaviour
 {
 
-    public static Utilities utilities;
-    public static Utilities Instance
+    public Text text;
+    public GameObject camera;
+    // Start is called before the first frame update
+    void Start()
     {
-        get
+        StartCoroutine(StartCorocoro());
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    public int distance=100;
+
+    IEnumerator StartCorocoro()
+    {
+
+        var gpsCoroutine = GPSCoroutine();
+        yield return StartCoroutine(gpsCoroutine);
+        Vector2 gps = (Vector2)gpsCoroutine.Current;
+
+        //Vector2 dir = new Vector2(Random.value - 0.5f, Random.value - 0.5f);
+        Vector2 dir = new Vector2(-1, -1);
+
+        dir = dir.normalized * distance;
+
+        var targetGPS =gps+ Utilities.MeterToGPS(dir, gps.y);
+
+
+        while (true)
         {
-            if (utilities == null)
-            {
-                 utilities = new GameObject("Util",typeof(Utilities)).GetComponent<Utilities>();
-            }
 
-            return utilities;
+
+         
+
+
+            var ComparingConnpassCoroutine = ComparingConnpass(targetGPS);
+
+
+            yield return StartCoroutine(ComparingConnpassCoroutine);
+
+
+
+
+            ////print((float)ComparingConnpassCoroutine.Current);
+
+
+
+            var gpsc = GPSCoroutine();
+            yield return StartCoroutine(gpsc);
+            var nowGps = (Vector2)gpsc.Current;
+
+            text.text= Utilities.GetDistanceFromGPS(nowGps, targetGPS)+"\n"+nowGps.x+"\n"+nowGps.y;
+
+
+            SetOmusubi(targetGPS,nowGps);
+            RotateCamera();
+            yield return null;
         }
+
+
     }
 
 
+    public GameObject Omusubi;
 
-
-    public const int meter_per_longitude_X_equator = 111316;
-    public const int meter_per_latitude_Y = 110942;
-
-    /// <summary>
-    /// ある緯度における単位経度あたりの距離をメートルでかえす
-    /// </summary>
-    /// <param name="latitudeY"></param>
-    /// <returns></returns>
-    public static int MeterPerLongitudeX(float latitudeY)
+    
+    void SetOmusubi(Vector2 targetGPS,Vector2 nowGPS)
     {
-        return (int)(meter_per_longitude_X_equator * Mathf.Cos(latitudeY * Mathf.PI / 180));
+        Vector2 dir= Utilities.GPSToMeter(nowGPS, targetGPS);
+
+        Vector2 omuPos = dir.normalized*10;
+
+        Omusubi.transform.position = new Vector3(omuPos.x, 0, omuPos.y);
+
+        float scale = distance/dir.magnitude;
+
+        Omusubi.transform.localScale = Vector3.one * scale;
+
     }
 
-    //ある緯度における方向(メートル単位)を緯度経度に直す
-    public static Vector2 MeterToGPS(Vector2 vec, float latitudeY)
+
+    void RotateCamera()
     {
-        float lonX = vec.x / (MeterPerLongitudeX(latitudeY));
-        float latY = vec.y / meter_per_latitude_Y;
+        Input.gyro.enabled = true;
+        if (!Input.gyro.enabled) { return; }
 
-        return new Vector2(lonX, latY);
+        Quaternion correct = Quaternion.Euler(-90, 0, 0);
+        Vector3 rotEuler = (correct * Input.gyro.attitude).eulerAngles;
+        rotEuler.y *= -1;
+        rotEuler.x *= -1;
+        camera.transform.rotation = Quaternion.Euler(rotEuler);
     }
-
-    //2つのGPS座標を結ぶベクトルをメートルに直す
-    public static Vector2 GPSToMeter(Vector2 gpsFrom, Vector2 gpsTo)
-    {
-        var dirLonLat = gpsTo - gpsFrom;
-        Vector2 dir = new Vector2();
-
-        dir.x = dirLonLat.x * MeterPerLongitudeX(gpsFrom.y);
-        dir.y = dirLonLat.y * meter_per_latitude_Y;
-
-        return dir;
-    }
-
-
-    //2つの緯度経度間の距離を出す
-    public static float GetDistanceFromGPS(Vector2 gps1, Vector2 gps2)
-    {
-        return GPSToMeter(gps1, gps2).magnitude;
-    }
-
 
     /// <summary>
     /// 緯度と経度を返す
@@ -166,7 +204,7 @@ public class Utilities : MonoBehaviour
         var GPSCoroutine_ = GPSCoroutine();
         yield return StartCoroutine(GPSCoroutine_);
 
-        Vector2 targetDir = GPSToMeter((Vector2)GPSCoroutine_.Current, targetGPS);
+        Vector2 targetDir = Utilities.GPSToMeter((Vector2)GPSCoroutine_.Current, targetGPS);
 
         targetDir /= targetDir.magnitude;
 
@@ -184,4 +222,9 @@ public class Utilities : MonoBehaviour
 }
 
 
+public class Destination
+{
+    Vector2 startGPS;
 
+
+}
