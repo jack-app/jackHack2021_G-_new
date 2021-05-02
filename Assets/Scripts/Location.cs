@@ -13,6 +13,7 @@ public class Location : MonoBehaviour
 
     private void Start()
     {
+        print(Utilities.MeterPerLongitudeX(70));
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
@@ -38,7 +39,7 @@ public class Location : MonoBehaviour
         print(gps.x);
     }
 
-
+    public GameObject japan;
     public IEnumerator StartDirectionService()
     {
         
@@ -46,7 +47,12 @@ public class Location : MonoBehaviour
         {
             var coroutine = new Utilities().DirectionCoroutine();
             yield return StartCoroutine(coroutine);
-            print((float)coroutine.Current);
+            //float heading= (float)coroutine.Current;
+            //japan.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, heading);
+
+            
+
+
             yield return null;
         }
     }
