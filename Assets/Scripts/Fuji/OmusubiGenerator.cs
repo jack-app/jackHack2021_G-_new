@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class OmusubiGenerator : MonoBehaviour
 {
-    private Vector2 startLocation,currentLocation,nearestOmusubi;
-    private bool started = false;
+    private Vector2 startLocation;
+    public bool started = false;
     public int numberOfOmusubi;
     public List<Vector2> omusubiLocationList;
     float angle;
@@ -35,40 +35,7 @@ public class OmusubiGenerator : MonoBehaviour
     {
         for(int i = 0; i < numberOfOmusubi; i++)
         {
-            omusubiLocationList.Add(new Vector2(startLocation.x + Random.Range(0.1f,1.0f), startLocation.y + Random.Range(0.1f, 1.0f)));
+            omusubiLocationList.Add(new Vector2(startLocation.x + Random.Range(-0.005f,0.005f), startLocation.y + Random.Range(-0.005f, 0.005f)));
         }
-        foreach (Vector2 omusubiLocation in omusubiLocationList)
-        {
-            Debug.Log(omusubiLocation.ToString());
-        }
-    }
-    public void CallDetectAngle()
-    {
-        if (started == true)
-        {
-            StartCoroutine(DetectAngle());
-        }
-    }
-    private IEnumerator DetectAngle()
-    {
-        var locationNow = new Utilities().GPSCoroutine();
-        yield return StartCoroutine(locationNow);
-        currentLocation = (Vector2)locationNow.Current;
-        CalculateAngle();
-    }
-    void CalculateAngle()
-    {
-        float minDist = Mathf.Infinity;
-        foreach(Vector2 omusubiLocation in omusubiLocationList)
-        {
-            float distance = Vector2.Distance(omusubiLocation, currentLocation);
-            if(distance < minDist)
-            {
-                nearestOmusubi = omusubiLocation;
-                minDist = distance;
-            }
-        }
-        angle = Vector2.Angle(nearestOmusubi, currentLocation);
-        Debug.Log(angle);
     }
 }
