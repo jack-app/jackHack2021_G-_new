@@ -5,24 +5,39 @@ using TMPro;
 
 public class SearchMode_GPS : MonoBehaviour
 {
-    private TextMeshProUGUI tmPro;
-    private Vector2 location;
-    Utilities util;
+    private TextMeshProUGUI tmLocation,tmAngle;
+    public Vector2 currentLocation;
+    private float angle;
     // Start is called before the first frame update
     private void Start()
     {
-        tmPro = GameObject.Find("GPSText").GetComponent<TextMeshProUGUI>();
-        util = GetComponent<Utilities>();
+        //StartだからFind許して
+        tmLocation = GameObject.Find("LocationText").GetComponent<TextMeshProUGUI>();
+        tmAngle = GameObject.Find("AngleText").GetComponent<TextMeshProUGUI>();
     }
     // Update is called once per frame
+    //ボタンで呼びたいのでpublic voidの皮をかぶせる
     public void ShowLocationForButton()
     {
         StartCoroutine(ShowLocation());
     }
+    public void ShowAngleForButton()
+    {
+        StartCoroutine(ShowAngle());
+    }
     private IEnumerator ShowLocation()
     {
-        yield return util.GPSCoroutine();
-        location = (Vector2)util.GPSCoroutine().Current;
-        tmPro.SetText(location.ToString());
+        //Utilitiesスクリプトから位置をもらって表示、後述の角度も同じ
+        var locationNow = new Utilities().GPSCoroutine();
+        yield return StartCoroutine(locationNow);
+        currentLocation = (Vector2)locationNow.Current;
+        tmLocation.SetText(currentLocation.ToString());
+    }
+    private IEnumerator ShowAngle()
+    {
+        var angleNow = new Utilities().DirectionCoroutine();
+        yield return StartCoroutine(angleNow);
+        angle = (float)angleNow.Current;
+        tmAngle.SetText(angle.ToString());
     }
 }
