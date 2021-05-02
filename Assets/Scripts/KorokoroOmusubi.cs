@@ -33,7 +33,18 @@ public class KorokoroOmusubi : MonoBehaviour
 
             yield return StartCoroutine(ComparingConnpassCoroutine);
 
+
+
+
             print((float)ComparingConnpassCoroutine.Current);
+
+
+
+            
+            yield return StartCoroutine(gpsCoroutine);
+            gps = (Vector2)gpsCoroutine.Current;
+
+            print(Utilities.GetDistanceFromGPS(gps, gps2));
         }
 
 
