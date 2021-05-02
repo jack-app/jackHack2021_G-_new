@@ -21,11 +21,15 @@ public class KorokoroOmusubi : MonoBehaviour
         var gpsCoroutine = new Utilities().GPSCoroutine();
         yield return StartCoroutine(gpsCoroutine);
         Vector2 gps = (Vector2)gpsCoroutine.Current;
-        print(gps.x);
-        var gps2 =gps+ Utilities.MeterToLonLat(new Vector2(1000,1000), gps.y);
-        print(gps.x);
+        var gps2 =gps+ Utilities.MeterToGPS(new Vector2(1000,1000), gps.y);
 
-        print(Utilities.GetDistanceFromGPS(gps, gps2));
+
+        while (true)
+        {
+
+
+            yield return new WaitForSeconds(1);
+        }
 
 
     }

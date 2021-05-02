@@ -18,13 +18,16 @@ public class Utilities : MonoBehaviour
     }
 
     //ある緯度における方向(メートル単位)を緯度経度に直す
-    public static Vector2 MeterToLonLat(Vector2 vec, float latitudeY)
+    public static Vector2 MeterToGPS(Vector2 vec, float latitudeY)
     {
         float lonX = vec.x / (MeterPerLongitudeX(latitudeY));
         float latY = vec.y / meter_per_latitude_Y;
 
         return new Vector2(lonX,latY);
     }
+
+    
+
 
     //2つの緯度経度間の距離を出す
     public static float GetDistanceFromGPS(Vector2 gps1,Vector2 gps2)
