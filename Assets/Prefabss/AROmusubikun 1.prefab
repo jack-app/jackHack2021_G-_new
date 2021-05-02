@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2134855290615889975}
   m_Layer: 0
-  m_Name: Omusubikun
+  m_Name: AROmusubikun 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8054228115671562112}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 92.69023, y: 378.01074, z: 795.9941}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7562245822367326805}
@@ -44,7 +44,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3803232535888708685, guid: 3494669612c701a45b8a9c7356122710, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.24
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3803232535888708685, guid: 3494669612c701a45b8a9c7356122710, type: 3}
       propertyPath: m_LocalPosition.y
@@ -52,7 +52,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3803232535888708685, guid: 3494669612c701a45b8a9c7356122710, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.73
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3803232535888708685, guid: 3494669612c701a45b8a9c7356122710, type: 3}
       propertyPath: m_LocalRotation.w
@@ -86,7 +86,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: omusubi_
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4579065139737304817, guid: 3494669612c701a45b8a9c7356122710, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3494669612c701a45b8a9c7356122710, type: 3}
 --- !u!4 &7562245822367326805 stripped
 Transform:

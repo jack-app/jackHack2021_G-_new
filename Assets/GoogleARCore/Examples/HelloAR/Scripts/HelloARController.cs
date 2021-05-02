@@ -94,6 +94,13 @@ namespace GoogleARCore.Examples.HelloAR
             Application.targetFrameRate = 60;
         }
 
+
+
+
+
+
+        int count = 0;
+        bool put=false;
         /// <summary>
         /// The Unity Update() method.
         /// </summary>
@@ -101,18 +108,14 @@ namespace GoogleARCore.Examples.HelloAR
         {
             UpdateApplicationLifecycle();
 
-            // If the player has not touched the screen, we are done with this update.
-            Touch touch;
-            if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
-            {
-                return;
-            }
 
-            // Should not handle input if the player is pointing on UI.
-            if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
-            {
-                return;
-            }
+
+            count++;
+            if (count < 100) { return; }
+            if (put) { return; }
+            put = true;
+
+            Vector2 screenCenter = new Vector2(Screen.width / 2, Screen.height / 2);
 
             // Raycast against the location the player touched to search for planes.
             TrackableHit hit;
@@ -120,14 +123,14 @@ namespace GoogleARCore.Examples.HelloAR
             if (InstantPlacementMenu.IsInstantPlacementEnabled())
             {
                 foundHit = Frame.RaycastInstantPlacement(
-                    touch.position.x, touch.position.y, 1.0f, out hit);
+                    screenCenter.x, screenCenter.y, 1.0f, out hit);
             }
             else
             {
                 TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
                     TrackableHitFlags.FeaturePointWithSurfaceNormal;
                 foundHit = Frame.Raycast(
-                    touch.position.x, touch.position.y, raycastFilter, out hit);
+                    screenCenter.x, screenCenter.y, raycastFilter, out hit);
             }
 
             if (foundHit)
