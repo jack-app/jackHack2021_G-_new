@@ -9,7 +9,7 @@ public class OmuVoice : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("Voice", 10, 3);
+        
     }
 
     // Update is called once per frame
@@ -22,5 +22,11 @@ public class OmuVoice : MonoBehaviour
     void Voice()
     {
         Instantiate(voice, transform.position + Vector3.up, Quaternion.identity);
+    }
+
+
+    public void VoicePlay()
+    {
+        InvokeRepeating("Voice", 10, 3);
     }
 }

@@ -8,9 +8,7 @@ public class Wa : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("Voice", 1);
-        Invoke("Voice", 3);
-        Invoke("Voice", 5);
+        InvokeRepeating("Voice", 1, 2);
     }
 
     // Update is called once per frame
@@ -23,5 +21,10 @@ public class Wa : MonoBehaviour
     void Voice()
     {
         Instantiate(voice, transform.position + Vector3.up*4, Quaternion.identity);
+    }
+
+    public void Cancel()
+    {
+        CancelInvoke("Voice");
     }
 }

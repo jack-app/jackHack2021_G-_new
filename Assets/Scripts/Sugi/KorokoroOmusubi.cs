@@ -38,7 +38,7 @@ public class KorokoroOmusubi : MonoBehaviour
             if (count > 500)
             {
                 Vector3 pos = Omusubi.transform.position;
-                pos.y += speed*0.0001f;
+                pos.z += speed*0.001f;
                 speed += 1;
                 Omusubi.transform.position = pos;
             }
@@ -56,7 +56,7 @@ public class KorokoroOmusubi : MonoBehaviour
 
             Omusubi.transform.Rotate(0, 0, 6);
             Vector3 pos = Omusubi.transform.position;
-            pos.y += speed * 0.0001f;
+            pos.z += speed * 0.001f;
             speed += 1;
             Omusubi.transform.position = pos;
             yield return null;
@@ -69,6 +69,9 @@ public class KorokoroOmusubi : MonoBehaviour
             count++;
         }
 
+
+        Omusubi.GetComponent<Wa>().Cancel();
+        Omusubi.GetComponent<OmuVoice>().VoicePlay();
         StartCoroutine(StartCorocoro());
 
         count = 0;
@@ -92,21 +95,22 @@ public class KorokoroOmusubi : MonoBehaviour
 
 
 
-
+    public Vector2 startGPS;
     IEnumerator StartCorocoro()
     {
 
         var gpsCoroutine = GPSCoroutine();
         yield return StartCoroutine(gpsCoroutine);
-        Vector2 gps = (Vector2)gpsCoroutine.Current;
+        startGPS = (Vector2)gpsCoroutine.Current;
 
         //Vector2 dir = new Vector2(Random.value - 0.5f, Random.value - 0.5f);
         Vector2 dir = new Vector2(-1, -1);
 
         dir = dir.normalized * distance;
 
-        targetGPS =gps+ Utilities.MeterToGPS(dir, gps.y);
+        targetGPS =startGPS+ Utilities.MeterToGPS(dir, startGPS.y);
 
+        SetOmusubi(targetGPS, startGPS);
 
         while (true)
         {
@@ -129,7 +133,7 @@ public class KorokoroOmusubi : MonoBehaviour
             text.text= Utilities.GetDistanceFromGPS(nowGps, targetGPS)+"\n"+nowGps.x+"\n"+nowGps.y;
 
 
-            SetOmusubi(targetGPS,nowGps);
+            SetCamera(targetGPS,nowGps);
             RotateCamera();
             yield return null;
 
@@ -167,20 +171,43 @@ public class KorokoroOmusubi : MonoBehaviour
 
     public GameObject Omusubi;
 
-    
-    void SetOmusubi(Vector2 targetGPS,Vector2 nowGPS)
+    float magnification;
+    const float OmusubiSetDistance = 200;
+    void SetOmusubi(Vector2 targetGPS, Vector2 startGPS)
     {
-        Vector2 dir= Utilities.GPSToMeter(nowGPS, targetGPS);
+        Vector2 dir = Utilities.GPSToMeter(startGPS, targetGPS);
 
-        Vector2 omuPos = dir.normalized*10;
+        magnification = OmusubiSetDistance / distance;
+
+        Vector2 omuPos = dir*magnification;
 
         Omusubi.transform.position = new Vector3(omuPos.x, 0, omuPos.y);
+    }
+
+
+
+    void SetCamera(Vector2 targetGPS,Vector2 nowGPS)
+    {
+        Vector2 dir= Utilities.GPSToMeter(startGPS, nowGPS);
+
+
+
+
+        //Omusubi.transform.position = new Vector3(omuPos.x, 0, omuPos.y);
+
+        Vector2 pos = dir * magnification;
+
+        print(pos.x+","+pos.y);
+        camera.transform.position = new Vector3(pos.x, camera.transform.position.y, pos.y);
+
 
         Omusubi.transform.rotation = Quaternion.LookRotation(Omusubi.transform.position - camera.transform.position);
 
-        float scale = distance/dir.magnitude;
+        //float scale = distance/dir.magnitude;
 
-        Omusubi.transform.localScale = Vector3.one * scale/10;
+        //Omusubi.transform.localScale = Vector3.one * scale;
+
+
 
     }
 
