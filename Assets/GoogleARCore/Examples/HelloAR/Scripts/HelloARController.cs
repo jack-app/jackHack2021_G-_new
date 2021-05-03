@@ -99,7 +99,7 @@ namespace GoogleARCore.Examples.HelloAR
 
 
 
-        GameObject gameObject;
+        GameObject targetGameObject;
 
         /// <summary>
         /// The Unity Update() method.
@@ -174,26 +174,26 @@ namespace GoogleARCore.Examples.HelloAR
                         prefab = GameObjectHorizontalPlanePrefab;
                     }
 
-                    if (gameObject != null) { Destroy(gameObject); }
+                    if (targetGameObject != null) { Destroy(targetGameObject); }
 
                     // Instantiate prefab at the hit pose.
-                    gameObject = Instantiate(prefab, hit.Pose.position, hit.Pose.rotation);
+                    targetGameObject = Instantiate(prefab, hit.Pose.position, hit.Pose.rotation);
 
                     // Compensate for the hitPose rotation facing away from the raycast (i.e.
                     // camera).
-                    gameObject.transform.Rotate(0, _prefabRotation, 0, Space.Self);
+                    targetGameObject.transform.Rotate(0, _prefabRotation, 0, Space.Self);
 
                     // Create an anchor to allow ARCore to track the hitpoint as understanding of
                     // the physical world evolves.
                     var anchor = hit.Trackable.CreateAnchor(hit.Pose);
 
                     // Make game object a child of the anchor.
-                    gameObject.transform.parent = anchor.transform;
+                    targetGameObject.transform.parent = anchor.transform;
 
                     // Initialize Instant Placement Effect.
                     if (hit.Trackable is InstantPlacementPoint)
                     {
-                        gameObject.GetComponentInChildren<InstantPlacementEffect>()
+                        targetGameObject.GetComponentInChildren<InstantPlacementEffect>()
                             .InitializeWithTrackable(hit.Trackable);
                     }
                 }
