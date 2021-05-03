@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TakeFinalPicure : MonoBehaviour
 {
-    Transform 
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +17,7 @@ public class TakeFinalPicure : MonoBehaviour
     }
     void FinishSearchMode(int size)
     {
+        /*
         NativeCamera.Permission permission = NativeCamera.TakePicture((path) =>
         {
             Debug.Log(path);
@@ -30,5 +30,6 @@ public class TakeFinalPicure : MonoBehaviour
                 }
             }
         }
+        */
     }
 }
