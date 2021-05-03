@@ -292,9 +292,9 @@ RectTransform:
   - {fileID: 179219536}
   - {fileID: 1824832003}
   - {fileID: 768564460}
+  - {fileID: 1183022310}
   - {fileID: 1432310448}
   - {fileID: 2114317013}
-  - {fileID: 1183022310}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -584,7 +584,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 569762130}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -825,6 +825,7 @@ GameObject:
   - component: {fileID: 1432310451}
   - component: {fileID: 1432310450}
   - component: {fileID: 1432310449}
+  - component: {fileID: 1432310452}
   m_Layer: 5
   m_Name: ModeChase
   m_TagString: Untagged
@@ -845,7 +846,7 @@ RectTransform:
   m_Children:
   - {fileID: 1353537433}
   m_Father: {fileID: 569762130}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -895,7 +896,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1432310450}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1432310452}
+        m_TargetAssemblyTypeName: ToCoroCoro, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1432310450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -934,6 +947,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1432310447}
   m_CullTransparentMesh: 1
+--- !u!114 &1432310452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432310447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6fa9bbc9f6cd1845a63c2662da4c904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1498256739
 GameObject:
   m_ObjectHideFlags: 0
@@ -1100,6 +1125,7 @@ GameObject:
   - component: {fileID: 2114317016}
   - component: {fileID: 2114317015}
   - component: {fileID: 2114317014}
+  - component: {fileID: 2114317017}
   m_Layer: 5
   m_Name: ModeSearch
   m_TagString: Untagged
@@ -1120,7 +1146,7 @@ RectTransform:
   m_Children:
   - {fileID: 1063510801}
   m_Father: {fileID: 569762130}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1170,7 +1196,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2114317015}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2114317017}
+        m_TargetAssemblyTypeName: ToDokoDoko, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2114317015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1209,3 +1247,15 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2114317012}
   m_CullTransparentMesh: 1
+--- !u!114 &2114317017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114317012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f329bfcc94b7bc64da44370585d05065, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
