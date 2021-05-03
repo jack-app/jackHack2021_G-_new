@@ -11,6 +11,9 @@ public class KorokoroOmusubi : MonoBehaviour
     public GameObject camera;
     public Image panel;
     public Vector2 targetGPS;
+    public InputField inputField;
+
+    [SerializeField] GameObject[] gameObjects;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +29,20 @@ public class KorokoroOmusubi : MonoBehaviour
 
     public void StartOmusubi()
     {
-        StartCoroutine(ReadyCoroCoro());
+        
+
+        int meter;
+        if (int.TryParse(inputField.text,out meter))
+        {
+            distance = meter;
+            StartCoroutine(ReadyCoroCoro());
+
+
+            foreach(GameObject gob in gameObjects)
+            {
+                gob.SetActive(false);
+            }
+        }
     }
 
 
@@ -137,7 +153,7 @@ public class KorokoroOmusubi : MonoBehaviour
             yield return StartCoroutine(gpsc);
             var nowGps = (Vector2)gpsc.Current;
 
-            text.text= Utilities.GetDistanceFromGPS(nowGps, targetGPS)+"\n"+nowGps.x+"\n"+nowGps.y;
+            //text.text= Utilities.GetDistanceFromGPS(nowGps, targetGPS)+"\n"+nowGps.x+"\n"+nowGps.y;
 
 
             SetCamera(targetGPS,nowGps);
